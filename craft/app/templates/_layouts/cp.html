@@ -1,0 +1,270 @@
+{% extends "_layouts/basecp" %}
+
+{% includeCssResource "css/cp.css" first %}
+{%- includeTranslations
+	"Pending",
+	"Failed",
+	"Failed task",
+	"Options",
+	"Try again",
+	"Show sidebar",
+	"Hide sidebar",
+	"1 update available",
+	"{num} updates available",
+	"More",
+	"Attempted to get the height of a modal whose container has not been set.",
+	"Attempted to get the width of a modal whose container has not been set.",
+	"Attempted to position a modal whose container has not been set.",
+	"Attempted to position a modal whose container has not been set.",
+	"Are you sure you want to transfer your license to this domain?",
+	"License transferred.",
+	"An unknown error occurred.",
+	"Cancel",
+	"Close",
+	"Create",
+	"Done",
+	"Delete",
+	"Handle",
+	"Name",
+	"Move",
+	"New Child",
+	"Remove",
+	"Reorder",
+	"Save",
+	"Settings",
+	"Select",
+	"New order saved.",
+	"Couldn’t save new order.",
+	"Are you sure you want to delete “{name}”?",
+	"“{name}” deleted.",
+	"Couldn’t delete “{name}”.",
+	"Show/hide children",
+	"New child",
+	"Upload failed for {filename}",
+	"View file",
+	"Edit properties",
+	"Rename file",
+	"Copy reference tag",
+	"Delete file",
+	"{ctrl}C to copy.",
+	"Are you sure you want to delete these {number} files?",
+	"New subfolder",
+	"Rename folder",
+	"Delete folder",
+	"Enter the name of the folder",
+	"Really delete folder “{folder}”?",
+	"Upload files",
+	"Select Transform",
+	"Please enter your current password.",
+	"Continue",
+	"Cancel"
+-%}
+
+
+{% block body %}
+	{% if currentUser.admin and craft.config.devMode %}
+		<div id="devmode" title="{{ 'Craft is running in Dev Mode.'|t }}"></div>
+	{% endif %}
+
+	{% if craft.cp.areAlertsCached() %}
+		{% set alerts = craft.cp.getAlerts() %}
+		{% if alerts %}
+			<ul id="alerts">
+				{% for alert in craft.cp.getAlerts() %}
+					<li>{{ alert|raw }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% else %}
+		{% includeJs 'Craft.cp.fetchAlerts();' %}
+	{% endif %}
+
+	<header id="header">
+		<div class="container">
+			<ul id="header-actions" class="right">
+				{% set task = craft.tasks.getRunningTask() %}
+				{% if task %}
+					{% includeJs 'Craft.cp.setRunningTaskInfo('~task.getInfo()|json_encode|raw~');' %}
+					{% includeJs 'Craft.cp.trackTaskProgress();' %}
+				{% elseif craft.tasks.areTasksPending() %}
+					{% includeJs 'Craft.cp.runPendingTasks();' %}
+				{% elseif craft.tasks.haveTasksFailed() %}
+					{% includeJs 'Craft.cp.setRunningTaskInfo({ status: "error" });' %}
+				{% endif %}
+
+				{% if currentUser.can('performUpdates') %}
+					{% if craft.app.isUpdateInfoCached() %}
+						{% set totalUpdates = craft.app.getTotalAvailableUpdates() %}
+						{% if totalUpdates %}
+							{% if totalUpdates == 1 %}
+								{% set updateText = "1 update available"|t %}
+							{% else %}
+								{% set updateText = "{num} updates available"|t({ num: totalUpdates }) %}
+							{% endif %}
+							<li class="updates{% if craft.app.isCriticalUpdateAvailable() %} critical{% endif %}">
+								<a data-icon="newstamp" href="{{ url('updates') }}" title="{{ updateText }}">
+									<span>{{ totalUpdates }}</span>
+								</a>
+							</li>
+						{% endif %}
+					{% else %}
+						{% includeJs 'Craft.cp.checkForUpdates();' %}
+					{% endif %}
+				{% endif %}
+
+				{% if currentUser.admin %}
+					<li>
+						<a class="settings" data-icon="settings" href="{{ url('settings') }}" title="{{ 'Settings'|t }}"></a>
+					</li>
+					<li>
+						<a class="settingsmenu menubtn" title="{{ 'Settings'|t }}"></a>
+						<div id="settingsmenu" class="menu padded" data-align="right">
+							<ul>
+								{% for category, items in craft.cp.settings() %}
+									{% for handle, item in items %}
+										<li><a href="{{ url('settings/'~handle) }}" data-icon="{{ item.icon }}">{{ item.label }}</a></li>
+									{% endfor %}
+								{% endfor %}
+							</ul>
+						</div>
+					</li>
+				{% endif %}
+
+				<li>
+					<a data-icon="user" class="myaccount menubtn" title="{{ 'My Account'|t }}" role="button"></a>
+					<div class="menu" data-align="right">
+						<ul>
+							<li><a href="{{ url('myaccount') }}">{{ "My Account"|t }}</a></li>
+							{% if CraftEdition == CraftClient and currentUser.admin %}
+								<li><a href="{{ url('clientaccount') }}">{{ "Client’s Account"|t }}</a></li>
+							{% endif %}
+							<li><a href="{{ logoutUrl }}">{{ "Sign out"|t }}</a></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+
+			<h2><a href="{{ siteUrl }}" title="{{ 'Site Homepage'|t }}" target="_blank">{{ siteName|t }}</a></h2>
+
+			<nav>
+				<ul id="nav">
+					{% for handle, item in craft.cp.nav() %}
+						<li id="nav-{{ handle }}">
+							<a{% if item.sel %} class="sel"{% endif %} href="{{ item.url }}">
+								{{- item.name -}}
+								{%- if item.badge is defined and item.badge -%}
+									<span class="badge">{{ item.badge }}</span>
+								{%- endif -%}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div class="container">
+		<div id="notifications-wrapper">
+			<div id="notifications">
+				{% for type in ['notice', 'error'] %}
+					{% set message = craft.session.getFlash(type) %}
+					{% if message %}
+						<div class="notification {{ type }}">{{ message }}</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+
+		<header id="page-header">
+			{% block pageHeader %}
+				{% if crumbs is defined and crumbs %}
+					<nav id="crumbs">
+						<ul>
+							{% for crumb in crumbs %}
+								<li><a href="{{ crumb.url }}">{{ crumb.label }}</a></li>
+							{% endfor %}
+						</ul>
+					</nav>
+				{% endif %}
+
+				{% if title is defined and title %}
+					<h1>{{ title|raw }}</h1>
+				{% endif %}
+
+				{% if extraPageHeaderHtml is defined %}
+					<div id="extra-headers">
+						{{ extraPageHeaderHtml }}
+					</div>
+				{% endif %}
+
+				<div class="clear"></div>
+			{% endblock %}
+		</header>
+
+		<main id="main" role="main">
+			{% block main %}
+				{% set sidebar = sidebar is defined ? sidebar : block('sidebar')|trim %}
+				{% set hasSidebar = (sidebar is not empty) %}
+				{% set hasHelp = (docsUrl is defined and docsUrl is not empty) %}
+
+				<div class="grid">
+					<div class="item">
+						<div class="pane">
+							{% if tabs is defined and tabs %}
+								{% include "_includes/tabs" %}
+							{% endif %}
+
+							<div id="content" class="content{% if hasSidebar %} has-sidebar{% endif %}{% if hasHelp %} has-help{% endif %}">
+								{% if hasSidebar %}
+									<div id="sidebar" class="sidebar">
+										{{ sidebar|raw }}
+									</div>
+								{% endif %}
+
+								{% block content %}
+									{{ content is defined ? content }}
+								{% endblock %}
+
+								{% if hasHelp %}
+									<a id="help" class="help" title="{{ 'Help'|t }}" href="{{ docsUrl }}" target="_blank"></a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endblock %}
+		</main>
+
+		<div id="footer">
+			<ul>
+				<li>Craft {{ craft.app.getEditionName()}} {{ craft.app.getVersion() }}.{{ craft.app.getBuild() }}</li>
+				<li>{{ "Released on"|t }} {{ craft.app.releaseDate.localeDate }}</li>
+				{% if currentUser.can('performUpdates') %}
+					<li><a id="footer-updates" href="{{ url('updates') }}">{{ craft.app.isUpdateInfoCached() and totalUpdates ? updateText : "Check for updates"|t }}</a></li>
+				{% endif %}
+				<li>{{ "Copyright"|t }} {{ now.year}} Pixel &amp; Tonic, Inc. {{ "All rights reserved."|t }}</li>
+			</ul>
+
+			{% if (CraftEdition == CraftPersonal or craft.request.getPath == 'settings') and craft.app.canUpgradeEdition() %}
+				<p id="upgradepromo"><a>{{ "Upgrade Craft to take your site to the next level."|t }} <span class="go">{{ "Show me"|t }}</span></a></p>
+			{% endif %}
+		</div>
+	</div>
+
+	{% if craft.app.hasWrongEdition() %}
+		<div id="wrongedition-modal" class="modal fitted hidden">
+			<div class="body">
+				<p>{{ "You’re running Craft {edition} with a Craft {licensedEdition} license."|t({ edition: craft.app.getEditionName(), licensedEdition: craft.app.getLicensedEditionName() }) }}</p>
+				<p>{{ "What would you like to do?"|t }}</p>
+				<div class="buttons">
+					<div class="btngroup">
+						<div id="wrongedition-switchbtn" class="btn">{{ "Switch to Craft {edition}"|t({ edition: craft.app.getLicensedEditionName() }) }}</div>
+						{% if craft.app.getEdition() > craft.app.getLicensedEdition() %}
+							<div id="wrongedition-upgradebtn" class="btn">{{ "Upgrade your license"|t }}</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}

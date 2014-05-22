@@ -1,0 +1,24 @@
+{% set updates = craft.oauth.pluginCheckUpdates(plugins) %}
+
+{% if updates|length > 0 %}
+
+	<h2 class="first">Updates</h2>
+
+	<p>There are updates available for the following plugins :</p>
+
+
+	<ul>
+		{% for update in updates %}
+			{% set plugin = craft.plugins.getPlugin(update) %}
+
+			<li>{{plugin.name}}</li>
+		{% endfor %}
+	</ul>
+
+	<div class="buttons">
+		<a href="{{craft.oauth.pluginUpdatePluginsUrl(plugins)}}" class="btn">Update Plugins</a>
+	</div>
+
+	<hr />
+
+{% endif %}

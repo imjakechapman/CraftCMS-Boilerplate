@@ -1,0 +1,34 @@
+@import 'vendor/neat/neat-helpers';
+
+// Change the grid settings
+$column: 90px;
+$gutter: 30px;
+$grid-columns: 12;
+$max-width: em(960);
+
+// Needed to fix omega-reset
+$fg-column: $column;
+$fg-gutter: $gutter;
+
+// Set the visual grid
+$visual-grid: false;
+$visual-grid-color: #85754e;
+$visual-grid-index: 'front';
+$visual-grid-opacity: 0.1;
+
+// Define your breakpoints
+// $x-large: new-breakpoint(min-width 1141px 12);
+// $large: new-breakpoint(min-width 769px max-width 1140px 8);
+// $medium: new-breakpoint(max-width 768px 8);
+// $small: new-breakpoint(max-width 480px 4);
+// $devices: new-breakpoint(max-width 768px 8);
+
+
+
+// ------------------------------------------------------------
+// Omega Reset Mixin
+// ------------------------------------------------------------
+@mixin omega-reset($nth) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}

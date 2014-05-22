@@ -1,0 +1,21 @@
+<ul>
+	{% for key, source in sources %}
+		{% if source.heading is defined %}
+			<li class="heading"><span>{{ source.heading }}</span></li>
+		{% else %}
+			<li>
+				<a data-key="{{ key }}"
+					{%- if source.hasThumbs is defined and source.hasThumbs %} data-has-thumbs="1"{% endif %}
+					{%- if source.structureId is defined and source.structureId %} data-has-structure="1" data-structure-id="{{ source.structureId }}"{% endif %}
+					{%- if source.data is defined -%}
+						{% for dataKey, dataVal in source.data %} data-{{ dataKey }}="{{ dataVal }}"{% endfor %}
+					{%- endif -%}
+				>{{ source.label }}</a>
+				{% if source.nested is defined and source.nested is not empty %}
+					<div class="toggle"></div>
+					{% include "_elements/sources" with { sources: source.nested } %}
+				{% endif %}
+			</li>
+		{% endif %}
+	{% endfor %}
+</ul>

@@ -1,0 +1,150 @@
+[
+    {
+        "name": "chrisnharvey/oauth",
+        "version": "dev-dukt-guzzleless",
+        "version_normalized": "dev-dukt-guzzleless",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dukt/oauth.git",
+            "reference": "4cd2591629027d7a67b0391400441935e5168486"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dukt/oauth/zipball/4cd2591629027d7a67b0391400441935e5168486",
+            "reference": "4cd2591629027d7a67b0391400441935e5168486",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "0.7.*",
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2014-01-31 10:57:16",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "OAuth": "src"
+            }
+        },
+        "license": [
+            "dbad-license"
+        ],
+        "authors": [
+            {
+                "name": "Chris Harvey",
+                "email": "chris@chrisnharvey.com"
+            }
+        ],
+        "description": "Authorize users in your application with multiple OAuth 1.0 and OAuth 2.0 providers",
+        "keywords": [
+            "authentication",
+            "authorization",
+            "facebook",
+            "google",
+            "oauth",
+            "providers",
+            "twitter"
+        ],
+        "support": {
+            "source": "https://github.com/dukt/oauth/tree/dukt-guzzleless"
+        }
+    },
+    {
+        "name": "vipsoft/unzip",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vipsoft/Unzip.git",
+            "reference": "2c6a62cd9b7833e9825a542767954465fc03f569"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/vipsoft/Unzip/zipball/2c6a62cd9b7833e9825a542767954465fc03f569",
+            "reference": "2c6a62cd9b7833e9825a542767954465fc03f569",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.6"
+        },
+        "time": "2013-07-17 17:02:02",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "VIPSoft\\Unzip": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anthon Pang",
+                "email": "apang@softwaredevelopment.ca",
+                "role": "developer"
+            }
+        ],
+        "description": "Unzip library",
+        "homepage": "http://github.com/vipsoft/",
+        "keywords": [
+            "pclzip",
+            "unzip",
+            "zip",
+            "ziparchive"
+        ]
+    },
+    {
+        "name": "symfony/filesystem",
+        "version": "2.3.x-dev",
+        "version_normalized": "2.3.9999999.9999999-dev",
+        "target-dir": "Symfony/Component/Filesystem",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Filesystem.git",
+            "reference": "5ab540e57e50379a75ab5c6ab517e40252b15b23"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Filesystem/zipball/5ab540e57e50379a75ab5c6ab517e40252b15b23",
+            "reference": "5ab540e57e50379a75ab5c6ab517e40252b15b23",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2014-01-07 13:19:25",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Filesystem\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Filesystem Component",
+        "homepage": "http://symfony.com"
+    }
+]

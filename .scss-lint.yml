@@ -1,0 +1,14 @@
+linters:
+  TrailingSemicolonAfterPropertyValue:
+    enabled: true
+  StringQuotes:
+    enabled: false
+  UrlQuotes:
+    enabled: false
+  Indentation:
+    enabled: true
+    width: 2
+  EmptyLineBetweenBlocks:
+    enabled: true
+  ZeroUnit:
+    enabled: true

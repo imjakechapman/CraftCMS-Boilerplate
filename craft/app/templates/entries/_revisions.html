@@ -1,0 +1,37 @@
+{% requireEdition CraftClient %}
+
+{% set drafts = craft.entryRevisions.getEditableDraftsByEntryId(entry.id, entry.locale) %}
+{% set versions = craft.entryRevisions.getVersionsByEntryId(entry.id, entry.locale) %}
+{% set baseUrl = 'entries/'~entry.getSection().handle~'/'~entry.id~'/' %}
+
+<div class="btn menubtn">{{ revisionLabel }}</div>
+
+<div class="menu padded">
+	<ul>
+		<li><a{% if entry.classHandle == 'Entry' %} class="sel"{% endif %} href="{{ entry.cpEditUrl }}">{{ "Current"|t }}</a></li>
+	</ul>
+
+	{% if drafts %}
+		<hr>
+		<ul>
+			{% for draft in drafts %}
+				<li><a{% if entry.classHandle == 'EntryDraft' and draft.draftId == draftId %} class="sel"{% endif %} href="{{ url(baseUrl~'drafts/'~draft.draftId) }}">
+					{{ "Draft {id}"|t({ id: draft.draftId }) }}
+					<span class="light">{{ draft.creator }}</span>
+				</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% if versions %}
+		<hr>
+		<ul>
+			{% for version in versions %}
+				<li><a{% if entry.classHandle == 'EntryVersion' and version.versionId == versionId %} class="sel"{% endif %} href="{{ url(baseUrl~'versions/'~version.versionId) }}">
+					{{ "Version {id}"|t({ id: version.versionId }) }}
+					<span class="light">{{ version.creator }}</span>
+				</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</div>

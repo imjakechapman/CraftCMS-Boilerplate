@@ -1,0 +1,25 @@
+<phpunit
+		backupGlobals="false"
+		backupStaticAttributes="false"
+		bootstrap = "bootstrap.php"
+		colors = "true"
+		convertErrorsToExceptions = "true"
+		convertNoticesToExceptions = "false"
+		convertWarningsToExceptions = "false"
+		processIsolation="false"
+		stopOnFailure = "false"
+		stopOnError="false"
+		stopOnIncomplete="false"
+		stopOnSkipped="false"
+		syntaxCheck="true"
+		verbose="true"
+		strict="false">
+
+		<filter>
+			<blacklist>
+				<directory suffix=".php">../framework</directory>
+				<directory suffix=".php">../lib</directory>
+				<directory suffix=".php">../vendor</directory>
+			</blacklist>
+		</filter>
+</phpunit>

@@ -1,0 +1,29 @@
+{% extends "_layouts/cp" %}
+{% set title = "Settings"|t %}
+
+{% includeCssResource 'css/settings.css' %}
+{% includeJsResource 'js/settings.js' %}
+
+{% set content %}
+
+	{% for category, items in craft.cp.settings() %}
+		<h2>{{ category }}</h2>
+
+		<ul class="icons">
+			{% for handle, item in items %}
+				<li><a href="{{ url('settings/'~handle) }}" data-icon="{{ item.icon }}">{{ item.label }}</a></li>
+			{% endfor %}
+		</ul>
+
+		<hr>
+	{% endfor %}
+
+	<h2>{{ "Tools"|t }}</h2>
+
+	<ul class="icons">
+		{% for tool in tools %}
+			<li><a id="tool-{{ tool.getClassHandle() }}" data-icon="{{ tool.getIconValue() }}">{{ tool.getName() }}</a></li>
+			{% includeJs 'new Craft.Tool("'~tool.getClassHandle()~'", '~tool.getOptionsHtml()|json_encode~', "'~tool.getButtonLabel()~'");' %}
+		{% endfor %}
+	</ul>
+{% endset %}

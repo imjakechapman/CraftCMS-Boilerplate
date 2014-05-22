@@ -1,0 +1,68 @@
+{% from "_includes/forms" import text -%}
+
+{% includeTranslations
+	"Display in a table",
+	"Display hierarchically",
+	"Display as thumbnails"
+%}
+
+{% set context = context is defined ? context : 'index' %}
+{% set showStatusMenu = (showStatusMenu is defined and showStatusMenu != 'auto' ? showStatusMenu : elementType.hasStatuses()) %}
+{% set showLocaleMenu = (craft.isLocalized() and context == 'index' ? (showLocaleMenu is defined and showLocaleMenu != 'auto' ? showLocaleMenu : elementType.isLocalized()) : false) %}
+
+<div class="main">
+	<div class="toolbar">
+		<table class="inputs fullwidth">
+			<tr>
+				{% if showStatusMenu %}
+					<td class="thin">
+						<div class="btn menubtn statusmenubtn"><span class="status"></span>{{ "All"|t }}</div>
+						<div class="menu padded">
+							<ul>
+								<li><a data-status="" class="sel"><span class="status"></span>{{ "All"|t }}</a></li>
+								{% for status, label in elementType.getStatuses() %}
+									<li><a data-status="{{ status }}"><span class="status {{ status }}"></span> {{ label }}</a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</td>
+				{% endif %}
+				{% if showLocaleMenu %}
+					{% set editableLocaleIds = craft.i18n.getEditableLocaleIds() %}
+					{% if craft.locale in editableLocaleIds %}
+						{% set initialLocale = craft.i18n.getCurrentLocale() %}
+					{% elseif editableLocaleIds|length %}
+						{% set initialLocale = craft.i18n.getLocaleById(editableLocaleIds|first) %}
+					{% else %}
+						{% set initialLocale = null %}
+					{% endif %}
+					<td class="thin">
+						<div class="btn menubtn localemenubtn">{{ initialLocale ? initialLocale.getName() }}</div>
+						<div class="menu padded">
+							<ul>
+								{% for locale in craft.i18n.getEditableLocales() %}
+									<li><a{% if initialLocale and locale.getId() == initialLocale.getId() %} class="sel"{% endif %} data-locale="{{ locale.getId() }}">{{ locale.getName() }}</a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</td>
+				{% endif %}
+				<td>
+					<div class="texticon search icon">
+						{{ text({
+							placeholder: "Search"|t
+						}) }}
+					</div>
+				</td>
+				<td class="thin viewbtns hidden"></td>
+			</tr>
+		</table>
+		<div class="spinner hidden"></div>
+	</div>
+
+	<div class="elements"></div>
+
+	<div class="centeralign">
+		<div class="spinner loadingmore hidden"></div>
+	</div>
+</div>

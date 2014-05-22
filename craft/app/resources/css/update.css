@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* RTL stuff */
+#graphic { display: block; position: absolute; top: 50%; left: 50%; background-repeat: no-repeat; background-position: 50% 50%; }
+body.ltr #graphic { margin: -48px 0 0 -24px; }
+body.rtl #graphic { margin: -48px -24px 0 0; }
+
+#graphic.error { background-image: url(../images/error.png); }
+
+#graphic.success { background-image: url(../images/success.png); }
+
+#status { position: absolute; top: 50%; margin-top: 20px; width: 100%; text-align: center; font-size: 16px; line-height: 20px; color: #666; }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3 / 2), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 1.5dppx) { #graphic.error { background-image: url(../images/error_2x.png); background-size: 48px; }
+  #graphic.success { background-image: url(../images/success_2x.png); background-size: 48px; } }

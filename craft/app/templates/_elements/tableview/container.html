@@ -1,0 +1,13 @@
+<div class="tableview">
+	<table class="data fullwidth">
+		<thead>
+			{% for attribute, label in attributes %}
+				{% set ordered = (order is defined and order == attribute) %}
+				<th scope="col" data-attribute="{{ attribute }}"{% if ordered %} class="ordered {{ sort }}"{% endif %}>{{ label }}</th>
+			{% endfor %}
+		</thead>
+		<tbody>
+			{% include "_elements/tableview/elements" %}
+		</tbody>
+	</table>
+</div>

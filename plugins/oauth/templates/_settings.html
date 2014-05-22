@@ -1,0 +1,77 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% if providerHandle is not defined %}{% set providerHandle = null %}{% endif %}
+
+{% if provider is not defined %}
+    {% if providerHandle %}
+        {% set provider = craft.oauth.getProvider(providerHandle, false) %}
+
+        {% if not provider %}{% exit 404 %}{% endif %}
+    {% else %}
+        {% set provider = null %}
+    {% endif %}
+{% endif %}
+
+
+{% set title = provider.name~" Settings"|t %}
+
+{% set crumbs = [
+    { label: "OAuth"|t, url: url('oauth') }
+] %}
+
+{% set content %}
+
+
+    <form method="post" action="" accept-charset="UTF-8">
+        <input type="hidden" name="action" value="oauth/settings/providerSave">
+        <input type="hidden" name="redirect" value="oauth" />
+        {% if provider %}<input type="hidden" name="providerId" value="{{ provider.id }}" />{% endif %}
+        <input type="hidden" name="providerHandle" value="{{ provider.handle }}" />
+
+        <h2 class="first">Create an OAuth application</h2>
+
+        <p>Create an OAuth 2.0 application and enable associated providers in the
+            {% if provider.consoleUrl %}
+                <a target="_blank" href="{{provider.consoleUrl}}">{{provider.name}} API management Console</a>.
+            {% else %}
+                 API management Console.
+            {% endif %}
+        </p>
+
+
+        <p>Once created, configure the application with the following settings. You might not need to use all of them.</p>
+
+        <ul>
+            <li><strong>Web Origin :</strong> {{siteUrl}}</li>
+            <li><strong>Redirect URI :</strong> {{craft.oauth.callbackUrl(provider.handle)}}</li>
+        </ul>
+
+        <hr>
+        <h2>Client ID &amp; Secret</h2>
+
+        <p>Use the client ID & secret from the OAuth application that you've just created.</p>
+
+        {{ forms.textField({
+            label: 'Client Id'|t,
+            required: true,
+            name: 'provider[clientId]',
+            value: provider ? provider.clientId : null,
+            errors: provider ? provider.errors('clientId') : null
+        }) }}
+
+        {{ forms.textField({
+            label: 'Client Secret'|t,
+            required: true,
+            name: 'provider[clientSecret]',
+            value: provider ? provider.clientSecret : null,
+            errors: provider ? provider.errors('clientSecret') : null
+        }) }}
+
+        <div class="buttons">
+            <input class="btn submit" type="submit" value="{{ 'Save'|t }}">
+        </div>
+
+    </form>
+
+{% endset %}

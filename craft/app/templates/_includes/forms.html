@@ -1,0 +1,185 @@
+{% macro errorList(errors) %}
+	{% include "_includes/forms/errorList" %}
+{% endmacro %}
+
+
+{# Inputs #}
+
+
+{% macro hidden(config) -%}
+	{% include "_includes/forms/hidden" with config only %}
+{%- endmacro %}
+
+
+{% macro text(config) %}
+	{% include "_includes/forms/text" with config only %}
+{% endmacro %}
+
+
+{% macro password(config) %}
+	{% include "_includes/forms/text" with config|merge({ type: 'password' }) only %}
+{% endmacro %}
+
+
+{% macro date(config) %}
+	{% include "_includes/forms/date" with config only %}
+{% endmacro %}
+
+
+{% macro time(config) %}
+	{% include "_includes/forms/time" with config only %}
+{% endmacro %}
+
+
+{% macro color(config) %}
+	{% include "_includes/forms/color" with config only %}
+{% endmacro %}
+
+
+{% macro textarea(config) %}
+	{% include "_includes/forms/textarea" with config only %}
+{% endmacro %}
+
+
+{% macro select(config) %}
+	{% include "_includes/forms/select" with config only %}
+{% endmacro %}
+
+
+{% macro multiselect(config) %}
+	{% include "_includes/forms/multiselect" with config only %}
+{% endmacro %}
+
+
+{% macro checkbox(config) %}
+	{% include "_includes/forms/checkbox" with config only %}
+{% endmacro %}
+
+
+{% macro checkboxGroup(config) %}
+	{% include "_includes/forms/checkboxGroup" with config only %}
+{% endmacro %}
+
+
+{% macro checkboxSelect(config) %}
+	{% include "_includes/forms/checkboxSelect" with config only %}
+{% endmacro %}
+
+
+{% macro radio(config) %}
+	{% include "_includes/forms/radio" with config only %}
+{% endmacro %}
+
+
+{% macro radioGroup(config) %}
+	{% include "_includes/forms/radioGroup" with config only %}
+{% endmacro %}
+
+
+{% macro file(config) %}
+	{% include "_includes/forms/file" with config only %}
+{% endmacro %}
+
+
+{% macro lightswitch(config) %}
+	{% include "_includes/forms/lightswitch" with config only %}
+{% endmacro %}
+
+
+{% macro editableTable(config) %}
+	{% include "_includes/forms/editableTable" with config only %}
+{% endmacro %}
+
+
+{% macro elementSelect(config) %}
+	{% include "_includes/forms/elementSelect" with config only %}
+{% endmacro %}
+
+
+{# Fields #}
+
+
+{% macro field(config, input) %}
+	{% include "_includes/forms/field" with config|merge({ input: input }) only %}
+{% endmacro %}
+
+
+{% macro textField(config) %}
+	{{ _self.field(config, _self.text(config)) }}
+{% endmacro %}
+
+
+{% macro passwordField(config) %}
+	{{ _self.field(config, _self.password(config)) }}
+{% endmacro %}
+
+
+{% macro dateField(config) %}
+	{{ _self.field(config, _self.date(config)) }}
+{% endmacro %}
+
+
+{% macro timeField(config) %}
+	{{ _self.field(config, _self.time(config)) }}
+{% endmacro %}
+
+
+{% macro colorField(config) %}
+	{{ _self.field(config, _self.color(config)) }}
+{% endmacro %}
+
+
+{% macro dateTimeField(config) %}
+	{{ _self.field(config, _self.date(config)~_self.time(config)) }}
+{% endmacro %}
+
+
+{% macro textareaField(config) %}
+	{{ _self.field(config, _self.textarea(config)) }}
+{% endmacro %}
+
+
+{% macro selectField(config) %}
+	{{ _self.field(config, _self.select(config)) }}
+{% endmacro %}
+
+
+{% macro multiselectField(config) %}
+	{{ _self.field(config, _self.multiselect(config)) }}
+{% endmacro %}
+
+
+{% macro checkboxField(config) %}
+	<div class="field checkbox{% if config.first is defined and config.first %} first{% endif %}"{% if config.id is defined and config.id %} id="{{ config.id }}-field"{% endif %}>
+		{{ _self.checkbox(config) }}
+		{% if config.instructions is defined and config.instructions %}
+			<div class="instructions">{{ config.instructions|md }}</div>
+		{% endif %}
+	</div>
+{% endmacro %}
+
+
+{% macro checkboxSelectField(config) %}
+	{{ _self.field(config, _self.checkboxSelect(config)) }}
+{% endmacro %}
+
+
+{% macro radioGroupField(config) %}
+	{{ _self.field(config, _self.radioGroup(config)) }}
+{% endmacro %}
+
+
+{% macro fileField(config) %}
+	{{ _self.field(config, _self.file(config)) }}
+{% endmacro %}
+
+
+{% macro lightswitchField(config) %}
+	{{ _self.field(config, _self.lightswitch(config)) }}
+{% endmacro %}
+
+
+{% macro editableTableField(config) %}
+	{% set input %}{% include "_includes/forms/editableTable" with config only %}{% endset %}
+	{{ _self.field(config, input) }}
+{% endmacro %}

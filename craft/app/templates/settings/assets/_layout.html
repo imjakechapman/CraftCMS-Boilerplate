@@ -1,0 +1,12 @@
+{% extends "_layouts/cp" %}
+{% set title = "Asset Settings"|t %}
+
+{% set crumbs = [
+	{ label: "Settings"|t, url: url('settings') }
+] %}
+
+
+{% set tabs = {
+	sources: { label: "Sources"|t, url: url('settings/assets') },
+	transforms: { label: "Image Transforms"|t, url: url('settings/assets/transforms') },
+} %}

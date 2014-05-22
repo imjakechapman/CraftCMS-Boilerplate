@@ -1,0 +1,81 @@
+{% extends "_layouts/base" %}
+
+{# Figure out which Datepicker i18n script to load #}
+{%- switch craft.locale %}
+	{%- case 'en_gb' %}
+		{%- set datepickerLocale = 'en-GB' %}
+	{%- case 'fr_ca' %}
+		{%- set datepickerLocale = 'fr-CA' %}
+	{%- default %}
+		{%- set language = craft.i18n.getLocaleData().getLanguageID(craft.locale) %}
+		{%- if language in ['ar', 'de', 'fr', 'it', 'ja', 'nb', 'nl'] %}
+			{%- set datepickerLocale = language %}
+		{%- endif %}
+{%- endswitch %}
+
+{# Load scripts in reverse order #}
+
+{%- if datepickerLocale is defined %}
+	{%- includeJsResource 'lib/datepicker-i18n/datepicker-'~datepickerLocale~'.js' first %}
+{%- endif %}
+
+{%- includeJsResource "js/cp.js" first -%}
+{%- includeJsResource "js/craft.js" first -%}
+{%- includeJsResource 'lib/garnish-0.1'~(craft.config.useCompressedJs ? '.min' : '')~'.js' first %}
+{%- includeJsResource 'lib/fileupload/jquery.fileupload.js' first %}
+{%- includeJsResource 'lib/fileupload/jquery.ui.widget.js' first %}
+{%- includeJsResource 'lib/jquery.placeholder'~(craft.config.useCompressedJs ? '.min' : '')~'.js' first %}
+{%- includeJsResource 'lib/jquery-ui-1.10.4.custom'~(craft.config.useCompressedJs ? '.min' : '')~'.js' first %}
+{%- includeJsResource 'lib/jquery-2.1.0'~(craft.config.useCompressedJs ? '.min' : '')~'.js' first %}
+{%- includeJsResource 'lib/xregexp-all'~(craft.config.useCompressedJs ? '-min' : '')~'.js' first %}
+
+{%- includeTranslations "Show", "Hide" %}
+
+{% set orientation = craft.i18n.getLocaleData().getOrientation() %}
+
+{% block foot %}
+	<noscript>
+		<div class="message-container no-access">
+			<div class="pane notice">
+				<p>{{ "JavaScript must be enabled to access the Craft control panel."|t }}</p>
+			</div>
+		</div>
+	</noscript>
+
+	<script type="text/javascript">
+		window.Craft = {
+			siteUid:              "{{ craft.app.getSiteUid()|e('js') }}",
+			baseUrl:              "{{ url()|e('js') }}",
+			baseCpUrl:            "{{ cpUrl()|e('js') }}",
+			baseSiteUrl:          "{{ siteUrl()|e('js') }}",
+			actionUrl:            "{{ actionUrl()|e('js') }}",
+			resourceUrl:          "{{ resourceUrl()|e('js') }}",
+			scriptName:           "{{ craft.request.getScriptName()|e('js') }}",
+			omitScriptNameInUrls: {{ craft.config.omitScriptNameInUrls() ? 'true' : 'false' }},
+			usePathInfo:          {{ craft.config.usePathInfo() ? 'true' : 'false' }},
+			resourceTrigger:      "{{ craft.config.getResourceTrigger()|e('js') }}",
+			actionTrigger:        "{{ craft.config.actionTrigger|e('js') }}",
+			path:                 "{{ craft.request.getPath()|e('js') }}",
+			locale:               "{{ craft.locale|e('js') }}",
+			orientation:          "{{ orientation|e('js') }}",
+			left:                 "{{ orientation == 'ltr' ? 'left' : 'right' }}",
+			right:                "{{ orientation == 'ltr' ? 'right' : 'left' }}",
+			Personal:             {{ CraftPersonal }},
+			Client:               {{ CraftClient }},
+			Pro:                  {{ CraftPro }},
+			edition:              {{ CraftEdition }},
+			isLocalized:          {{ craft.isLocalized() ? 'true' : 'false' }},
+			translations:         {{ getTranslations()|raw }},
+			maxUploadSize:        {{ craft.app.getMaxUploadSize() }},
+			slugWordSeparator:    "{{ craft.config.slugWordSeparator|e('js') }}"
+		};
+
+		window.Craft.fileKinds = {};
+		{% for kind, info in craft.app.getFileKinds() %}
+			window.Craft.fileKinds.{{ kind }} = [];
+			{% for extension in info.extensions %}
+				window.Craft.fileKinds.{{ kind }}.push("{{ extension }}");
+			{% endfor %}
+		{% endfor %}
+	</script>
+{% endblock %}

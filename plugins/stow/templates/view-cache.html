@@ -1,0 +1,42 @@
+{% extends "_layouts/cp" %}
+
+{% set tabs = {
+    about: { label: "About"|t, url: url('stow') },
+    view: { label: "View Cache"|t, url: url('stow/view-cache') }
+} %}
+{% set selectedTab = 'view' %}
+
+{% set title = "Stow"|t %}
+
+{% set cachedItems = craft.stow.fetchAllCache %}
+
+{% set content %}
+	<table class="data">
+		<thead>
+			<tr>
+				<th>{{ "ID"|t }}</th>
+				<th>{{ "Scope"|t }}</th>
+				<th>{{ "Actions"|t }}</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+			{% for cache in cachedItems %}
+			    <tr>
+			    	<td>
+			    		{{ cache.key }}
+			    	</td>
+
+			    	<td>
+			    		{{ (cache.url == "" ? "Global" : "<a target='_blank' href='" ~ cache.url ~ "'>" ~ cache.url ~ "</a>") | raw}}
+			    	</td>
+
+		            <td class="thin nowrap">
+		                <a href="{{ actionUrl('stow/cache/delete', {id: cache.id}) }}" class="btn small">Delete</a>
+		            </td>
+			    </tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endset %}

@@ -1,0 +1,27 @@
+{% if value is not defined -%}
+	{% set value = null -%}
+{% endif -%}
+
+{% set id = id ~ '-date' -%}
+
+{% if name is defined and name -%}
+	{% set name = name ~ '[date]' -%}
+{% endif -%}
+
+<div class="datewrapper">
+	{%- include "_includes/forms/text" with { autocomplete: false, size: 10, value: (value ? value.localeDate() : '') } -%}
+</div>
+
+{%- set js %}
+
+	var $datePicker = $('#{{ id|namespaceInputId|e('js') }}');
+	$datePicker.datepicker({
+		constrainInput: false,
+		dateFormat: '{{ craft.i18n.datepickerJsFormat }}',
+		defaultDate: new Date({% if value %}{{ value.year }}, {{ value.month-1 }}, {{ value.day }}{% endif %}),
+		prevText:   '{{ "Prev"|t|e('js') }}',
+		nextText:   '{{ "Next"|t|e('js') }}',
+	});
+
+{%- endset %}
+{%- includeJs js %}

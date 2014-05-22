@@ -1,0 +1,20 @@
+{% extends "_layouts/message" %}
+{% set title = "Can’t run Craft"|t %}
+
+{% block message %}
+	<h2>{{ title }} :(</h2>
+
+	{% if reqCheck.result == 'failed' %}
+		<p>{{ "Your server doesn’t meet the following requirements to run Craft:"|t }}</p>
+
+		<ul class="bullets">
+			{% for req in reqCheck.requirements %}
+				{% if req.result == 'failed' %}
+					<li>{{ req.notes|raw }}</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+		<p>{{ "Please talk to your host/IT department about upgrading your server."|t }}</p>
+	{% endif %}
+{% endblock %}
