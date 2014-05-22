@@ -1,0 +1,38 @@
+{% extends "_layouts/cp" %}
+{% set tabs = {
+    about: { label: "About"|t, url: url('stow') },
+    view: { label: "View Cache"|t, url: url('stow/view-cache') }
+} %}
+{% set selectedTab = 'about' %}
+
+{% set title = "Stow"|t %}
+
+{% set content %}
+    <p>With Stow you can cache parts of your webpage for later retrieval. This allows your server to do less processing and your visitors to see your content faster. Everyone is happier with Stow :)</p>
+
+    <p>Currently Stow can take up to 2 parameters: <b>global</b> and <b>id</b>. You must provide at least an <b>id</b>.</p>
+
+    <p><b>Global</b> - optional</p>
+
+    <p>&nbsp;<b>Type</b>: boolean (true or false)<br />
+    &nbsp;<b>Default</b>: true<br />
+    &nbsp;<b>Description</b>: If set to true the cache will be globally accessible, if set to false the cache will be dependent on the URL.</p>
+
+    <p><b>ID</b> - required</p>
+
+    <p>&nbsp;<b>Type</b>: string<br />
+    &nbsp;<b>Default</b>: null<br />
+    &nbsp;<b>Description</b>: Cached items are tied to their ID. If the ID is not found in the database then a new cache is created.</p>
+
+    <p><b>Example of caching all your entries:</b></p>
+
+    <code>
+        {% verbatim %}
+        &nbsp;{% cache {global: true, id: 'all the entries'} %}<br />
+            &nbsp;&nbsp;{% for entry in craft.entries.find() %}<br />
+                &nbsp;&nbsp;&nbsp;{{ entry.title }}<br />
+            &nbsp;&nbsp;{% endfor %}<br />
+        &nbsp;{% endcache %}
+        {% endverbatim %}
+    </code>
+{% endset %}

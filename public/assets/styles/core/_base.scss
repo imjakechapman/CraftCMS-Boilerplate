@@ -1,0 +1,82 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html, body {
+  width: 100%;
+}
+
+body {
+  background: $basecolor;
+  font-family: $basefont;
+  font-size: 100%;
+  position: relative;
+}
+
+
+// Input Placeholders
+::-webkit-input-placeholder {
+   color: $basecolor;
+   font-family: $basefont;
+   text-transform: uppercase;
+   font-weight: 500;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: $basecolor;
+  font-family: $basefont;
+  font-weight: 500;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: $basecolor;
+  font-family: $basefont;
+  font-weight: 500;
+}
+
+:-ms-input-placeholder {
+  color: $basecolor;
+  font-family: $basefont;
+  font-weight: 500;
+}
+
+// Webkit Scrollbar
+// ::-webkit-scrollbar
+// {
+//   width: 0px;  /* for vertical scrollbars */
+//   height: 0px; /* for horizontal scrollbars */
+// }
+
+// ::-webkit-scrollbar-track {
+//   background: transparent;
+// }
+
+
+/*
+*
+*
+* YUCKY OLD BROWSERS
+*
+*
+*/
+
+div.browsehappy {
+  background: rgba(0,0,0, .15);
+  padding: 3em;
+  text-align: center;
+
+  p {
+    margin: 0;
+    text-shadow: 0 1px 0 rgba(255,255,255, .5);
+
+    a {
+      color: $basecolor;
+    }
+  }
+}

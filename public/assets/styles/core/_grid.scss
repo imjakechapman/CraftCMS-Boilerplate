@@ -1,0 +1,26 @@
+// import bourbon
+@import 'vendor/bourbon/bourbon';
+@import 'grid-settings';
+@import 'vendor/neat/neat';
+
+
+/*
+* Build your awesome grid however your heart desires
+*
+* For guide on building a grid with Bourbon Neat checkout the docs
+* http://neat.bourbon.io/
+*/
+
+// container
+// .container {
+  // @include outer-container;
+  // padding: 0 em(20);
+// }
+
+// .col-one {
+//   @include span-columns(1);
+// }
+
+// .col-two {
+//   @include span-columns(2);
+// }

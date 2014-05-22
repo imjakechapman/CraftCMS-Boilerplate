@@ -1,0 +1,34 @@
+{% if element.elementType == 'User' %}
+
+	    <table class="data collapsible">
+	        <thead>
+	            <tr>
+	                <th scope="col">{{ "Provider"|t }}</th>
+	                <th></th>
+	            </tr>
+	        </thead>
+	        <tbody>
+
+			    {% for provider in craft.oauth.getProviders() %}
+
+			        <tr>
+			        	<td>{{provider.name}}</td>
+			        	<td>
+							{% set token = craft.oauth.getUserToken(provider.handle, element.id) %}
+
+							{% if token %}
+								<div class="right"><a href="{{craft.oauth.disconnect(provider.handle)}}" class="btn small">Disconnect</a></div>
+							{% else %}
+								<div class="right"><a href="{{ craft.oauth.connect(provider.handle) }}" class="btn small">Connect</a></div>
+						    {% endif %}
+			        	</td>
+			        </tr>
+
+			    {% endfor %}
+
+	        </tbody>
+	    </table>
+
+{% else %}
+    This field can only be assigned to a User
+{% endif %}

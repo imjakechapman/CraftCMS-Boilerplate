@@ -1,0 +1,24 @@
+{% extends "oauth/_layout" %}
+{% set selectedTab = 'updates' %}
+
+{% set content %}
+
+    {% set oauthUpdates = craft.oauth.pluginCheckUpdates('oauth') %}
+
+    {% if oauthUpdates %}
+
+        <h2 class="first">Updates</h2>
+
+        <p>There are updates available for the OAuth plugin.</p>
+
+        <div class="buttons">
+            <a href="{{actionUrl('oauth/plugin/updatePlugins', {plugins:'oauth'})}}" class="btn">Update OAuth plugin</a>
+        </div>
+
+        <hr />
+
+    {% else %}
+        <p>OAuth plugin is up-to-date.</p>
+    {% endif %}
+
+{% endset %}

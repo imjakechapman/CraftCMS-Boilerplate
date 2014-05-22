@@ -1,0 +1,37 @@
+{% extends "oauth/_layout" %}
+{% set selectedTab = 'providers' %}
+
+{% set content %}
+
+    <table id="fields" class="data collapsible">
+        <thead>
+            <tr>
+                <th scope="col">{{ "Provider"|t }}</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for provider in craft.oauth.getProviders(false) %}
+
+                <tr>
+                    <td><a href="{{ url('oauth/settings/'~provider.handle) }}">{{provider.name}}</a></td>
+
+                    <td class="nowrap">
+
+                        {% if provider.isConfigured %}
+                                <span class="status on"></span> Configured
+                        {% else %}
+                            <span class="status"></span><span class="light">Not configured</span>
+                        {% endif %}
+                    </td>
+
+                    <td><a class="btn small" href="{{ url('oauth/settings/'~provider.handle) }}">API Settings</a></td>
+
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endset %}

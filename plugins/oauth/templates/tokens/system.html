@@ -1,0 +1,47 @@
+{% extends "oauth/_layout" %}
+{% set selectedTab = 'systemTokens' %}
+
+{% set content %}
+
+    <table class="data collapsible">
+        <thead>
+            <tr>
+                <th scope="col">{{ "ID"|t }}</th>
+                <th scope="col">{{ "Provider"|t }}</th>
+                <th scope="col">{{ "Scope"|t }}</th>
+                <th scope="col">{{ "Namespace"|t }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set tokens = craft.oauth.getSystemTokens() %}
+
+            {% for token in tokens %}
+
+                <tr>
+                    <td>{{token.id}}</td>
+                    <td class="nowrap">{{token.provider}}</td>
+                    <td>
+                        {% if token['scope'] is defined and token.scope is iterable %}
+                            {% if token.scope|length > 0 %}
+                                <ul>
+                                    {% for scopeRow in token.scope %}
+                                        <li><em>{{scopeRow}}</em></li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                -
+                            {% endif %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{(token['namespace'] is defined ? token.namespace : '')}}</td>
+                    <td class="thin"><a class="btn small" href="{{actionUrl('oauth/settings/deleteToken', {id:token.id})}}">Delete</a></td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endset %}

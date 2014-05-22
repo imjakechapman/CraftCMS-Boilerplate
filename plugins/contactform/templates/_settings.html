@@ -1,0 +1,49 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+	first:        true,
+	label:        "To Email"|t,
+	id:           'toEmail',
+	name:         'toEmail',
+	instructions: "The email address(es) that the contact form will send to. Separate multiple email addresses with commas."|t,
+	value:        settings.toEmail,
+	autofocus:    true,
+	errors:       settings.getErrors('toEmail')
+}) }}
+
+{{ forms.textField({
+	label:         "Sender Text"|t,
+	id:            'prependSender',
+	name:          'prependSender',
+	instructions: "Text that will be prepended to the email’s From Name to inform who the Contact Form actually was sent by."|t,
+	value:         (settings.prependSender ? settings.prependSender : "On behalf of"|t),
+	errors:        settings.getErrors('prependSender')
+}) }}
+
+{{ forms.textField({
+	label:        "Subject Text"|t,
+	id:           'prependSubject',
+	name:         'prependSubject',
+	instructions: "Text that will be prepended to the email’s Subject to flag that it comes from the Contact Form."|t,
+	value:        (settings.prependSubject ? settings.prependSubject : "New message from {siteName}"|t({ siteName: craft.app.siteName })),
+	errors:       settings.getErrors('prependSubject')
+}) }}
+
+{{ forms.lightswitchField({
+	label:        "Allow attachments?"|t,
+	id:           'allowAttachments',
+	name:         'allowAttachments',
+	on:           settings.allowAttachments,
+	errors:       settings.getErrors('allowAttachments')
+}) }}
+
+
+{{ forms.textField({
+	label:        "Honeypot Field"|t,
+	id:           'honeypotField',
+	name:         'honeypotField',
+	instructions: "The name of the 'honeypot' field in your Contact Form."|t,
+	value:        settings.honeypotField,
+	errors:       settings.getErrors('honeypotField')
+}) }}
+
