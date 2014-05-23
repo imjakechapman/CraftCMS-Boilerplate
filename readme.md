@@ -52,6 +52,7 @@ Now that you've put the correct database credentials in db.php, head on over to 
 ### Gulpjs
 If you don't already have Node installed head over to http://nodejs.org/download/
 via the command line:
+
 1. Install gulp `npm install -g gulp`
 2. Install gulp modules defined in package.json `npm install`
 3. Gulp away by running `gulp`
