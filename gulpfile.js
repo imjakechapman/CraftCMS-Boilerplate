@@ -1,4 +1,4 @@
-// Gulp Requires
+// Ah, Big Gulp's eh? Welp, see ya later.
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
     c = require('chalk'),
