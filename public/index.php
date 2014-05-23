@@ -4,7 +4,6 @@
 $craftPath = '../craft';
 
 
-
 // Move plugins path to right above web root
 define('CRAFT_PLUGINS_PATH', realpath(dirname(__FILE__) . "/../plugins").'/');
 
