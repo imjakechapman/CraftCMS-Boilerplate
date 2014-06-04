@@ -1,8 +1,0 @@
-@charset "UTF-8";
-/* RTL stuff */
-body.ltr #addlocale .text { padding-right: 30px; }
-body.rtl #addlocale .text { padding-left: 30px; }
-
-#addlocale .spinner { position: absolute; top: 0; }
-body.ltr #addlocale .spinner { right: 5px; }
-body.rtl #addlocale .spinner { left: 5px; }
