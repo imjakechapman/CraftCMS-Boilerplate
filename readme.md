@@ -1,6 +1,8 @@
 CraftCMS Boilerplate
 ==============================
 
+**Due to some reasons given by P&T the /craft/app folder has been removed, make sure if you clone this repo to replace that folder from the base craft download**
+
 ### Installation
 1. First create local database
 2. Create db.php and general.php files within /craft/config/local/
