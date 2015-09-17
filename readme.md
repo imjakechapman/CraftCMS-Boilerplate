@@ -1,7 +1,7 @@
 CraftCMS Boilerplate
 
-![Issues](https://img.shields.io/github/issues/imjakechapman/CraftCMS-Boilerplate.svg)
-![Forks](https://img.shields.io/github/forks/imjakechapman/CraftCMS-Boilerplate.svg)
+![Issues](https://img.shields.io/github/issues/imjakechapman/CraftCMS-Boilerplate.png)
+![Forks](https://img.shields.io/github/forks/imjakechapman/CraftCMS-Boilerplate.png)
 ==============================
 
 **Due to some reasons given by P&T the /craft/app folder has been removed, make sure if you clone this repo to replace that folder from the base craft download**
