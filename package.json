@@ -24,6 +24,12 @@
     "tiny-lr": "0.0.5",
     "gulp-scsslint": "0.0.4",
     "chalk": "^0.4.0",
-    "map-stream": "^0.1.0"
-  }
+    "map-stream": "^0.1.0",
+    "snyk": "^1.189.0"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
